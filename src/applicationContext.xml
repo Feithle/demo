@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--datasource-->
+    <bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/mysql?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+    <!--sqlSessionFactory-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+        <property name="configLocation" value="classpath:resource/SqlMapConfiger.xml"></property>
+        <property name="mapperLocations" value="classpath:resource/mapper/UserMapper.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--mapper-->
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="mapperFactoryBean">
+        <!--mapperInterface指定接口-->
+        <property name="mapperInterface" value="dao.UserDao"></property>
+        <!--配置SqlSessionFactory-->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+
+</beans>

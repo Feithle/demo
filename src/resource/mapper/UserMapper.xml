@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserDao">
+    <select id="findUserById" parameterType="int" resultType="entity.User">
+        select * from user_table where user_id=#{value}
+    </select>
+    <insert  id="add"  parameterType="entity.User" flushCache="true" statementType="PREPARED" keyProperty="email,password"  useGeneratedKeys="false" timeout="20">
+        insert into user_table (email,password) values(#{email},#{password})/*自动定位到参数*/
+    </insert>
+    <select id="quarryUser" parameterType="String" resultType="entity.User">
+        select * from user_table where email=#{value}
+    </select>
+    <select id="vertifyEmail" parameterType="String" resultType="java.lang.Boolean">
+        select * from user_table where email=#{email}
+    </select>
+
+</mapper>
